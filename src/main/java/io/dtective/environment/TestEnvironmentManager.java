@@ -29,7 +29,7 @@ public class TestEnvironmentManager {
 
         synchronized (MUTEX) {
 
-            File testEnv = new File("./build/environment/testEnvironment.json");
+            File testEnv = new File("./environment/testEnvironment.json");
             if (!testEnv.exists()) {
                 testEnv = new File("testEnvironment.json");
             }

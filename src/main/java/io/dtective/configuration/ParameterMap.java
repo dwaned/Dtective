@@ -469,7 +469,7 @@ public class ParameterMap {
         try {
             classLogger.trace("Initializing - environment.properties file");
 
-            File envProps = new File("./build/environment/environment.properties");
+            File envProps = new File("./environment/environment.properties");
             if (!envProps.exists()) {
                 envProps = new File("environment.properties");
             }
