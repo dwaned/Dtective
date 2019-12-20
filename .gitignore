@@ -1,5 +1,8 @@
-# Build directory
+# Maven Build directory
 target/
+
+# Gradle Build directory
+build/
 
 #Docker build directory
 build/allure-results/
