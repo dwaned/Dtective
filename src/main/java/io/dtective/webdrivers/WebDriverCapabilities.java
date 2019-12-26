@@ -63,6 +63,8 @@ public class WebDriverCapabilities {
 
                 ChromeOptions options = new ChromeOptions();
 
+                options.setExperimentalOption("w3c", false);
+
                 if (ParameterMap.getParamChromeHeadlessMode())
                     options.addArguments("--headless");
 
