@@ -244,8 +244,8 @@ public class BDDPlaceholders {
 
             toRemove = value.substring(value.indexOf('{'), value.indexOf('}') + 1);
             if (toRemove.contains(" ")) {
-                logger.trace(String.format(Thread.currentThread().getName() +
-                        " - Placeholder ignored as it contains spaces : %s |", toRemove));
+                logger.trace(String.format(Thread.currentThread().getName()
+                        + " - Placeholder ignored as it contains spaces : %s |", toRemove));
                 break;
             } else {
                 logger.trace(String.format(Thread.currentThread().getName() + " - Found Placeholder : %s |", toRemove));
@@ -262,8 +262,8 @@ public class BDDPlaceholders {
                     throw new Error("Unable to find the definition of : " + toRemove);
                 }
 
-                logger.trace(String.format(Thread.currentThread().getName() +
-                        " - Replacing Placeholder : %s with %s |", toRemove, paramData));
+                logger.trace(String.format(Thread.currentThread().getName()
+                        + " - Replacing Placeholder : %s with %s |", toRemove, paramData));
                 value = value.replace(toRemove, paramData);
             }
         }
