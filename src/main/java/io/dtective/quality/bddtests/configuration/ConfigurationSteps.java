@@ -32,6 +32,8 @@ public class ConfigurationSteps extends TestStepsCore {
     public ConfigurationSteps() {
         fieldList = Arrays.asList(
                 ParameterMap.class.getDeclaredFields());
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("./Beans.xml");
+        dataProvider = applicationContext.getBean("DataProvider", DataProvider.class);
     }
 
     /**
