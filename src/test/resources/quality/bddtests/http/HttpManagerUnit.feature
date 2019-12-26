@@ -4,7 +4,7 @@
 Feature: HTTP Messaging
 
   Scenario: Functional Test - Save Response to data-store
-    When I send a GET to URL "{unitTestSite}" and store response in data-store "myresponse"
+    When I send a GET to URL "{TestApi}" and store response in data-store "myresponse"
     Then I can use the locally set data "myresponse"
 
   Scenario: Functional Test - unique id is created
@@ -109,3 +109,9 @@ Feature: HTTP Messaging
     When I send a GET to URL "{TestApi}/unused"
     Then response body is equal to ""
     And response code is "404"
+
+  Scenario: Functional Test - Using data-store value in HTTP Header
+    Given I add the following data-store "token" "bearer 12345"
+    When I add HTTP Header "Authentication" value "{token}"
+    Then value of data-store "headers" is equal to "{Authentication=bearer 12345}"
+
