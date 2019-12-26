@@ -1,0 +1,29 @@
+name: Dtective Gradle CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [macos]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Build with Gradle
+      run: ./gradlew build -x test
+    - name: Building Docker environment
+      run: |
+        cp build/environment/environment.properties.example build/environment/environment.properties
+        cp build/environment/testEnvironment.json.example build/environment/testEnvironment.json
+        docker-compose up -d --build
+        docker-compose -f docker-compose.unittest.yml up -d --build
+        docker ps
+        docker exec runner-chrome mvn checkstyle:check
+        mvn checkstyle:check
+        docker exec runner-chrome mvn compile test "-Dcucumber.options=--tags @UnitTest"
+        docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
+        docker-compose -f docker-compose.unittest.yml down
