@@ -141,7 +141,7 @@ public class QAWebDriver implements WebDriver, JavascriptExecutor, TakesScreensh
     public void close() {
         logger.debug("Closing WebDriver");
 
-        if (Boolean.parseBoolean(ParameterMap.getParamIsRemoteInstance())) {
+        if (Boolean.parseBoolean(ParameterMap.getParamIsRemoteInstance()) && driver.getWindowHandles().size() == 1) {
             quit();
         } else
             driver.close();
@@ -226,8 +226,11 @@ public class QAWebDriver implements WebDriver, JavascriptExecutor, TakesScreensh
     @Override
     public Object executeScript(String script, Object... args) {
         script = script.trim();
+
+        /* Commented until confirmed that this is not need anymore
         if (!script.toLowerCase().startsWith("return"))
             script = "return " + script;
+        */
 
         return ((JavascriptExecutor) driver).executeScript(script, args);
     }
@@ -242,8 +245,11 @@ public class QAWebDriver implements WebDriver, JavascriptExecutor, TakesScreensh
     @Override
     public Object executeAsyncScript(String script, Object... args) {
         script = script.trim();
+
+        /* Commented until confirmed that this is not need anymore
         if (!script.toLowerCase().startsWith("return"))
             script = "return " + script;
+        */
 
         return ((JavascriptExecutor) driver).executeAsyncScript(script, args);
     }
