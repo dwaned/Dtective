@@ -17,8 +17,8 @@ jobs:
       run: ./gradlew build -x test
     - name: Building Docker environment
       run: |
-        cp build/environment/environment.properties.example build/environment/environment.properties
-        cp build/environment/testEnvironment.json.example build/environment/testEnvironment.json
+        cp environment/environment.properties.example build/environment/environment.properties
+        cp environment/testEnvironment.json.example build/environment/testEnvironment.json
         docker-compose up -d --build
         docker-compose -f docker-compose.unittest.yml up -d --build
         docker ps
