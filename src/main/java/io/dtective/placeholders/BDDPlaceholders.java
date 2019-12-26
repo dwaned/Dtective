@@ -243,23 +243,27 @@ public class BDDPlaceholders {
         while (value.contains("{") && value.contains("}") && !value.contains("\"")) {
 
             toRemove = value.substring(value.indexOf('{'), value.indexOf('}') + 1);
-            logger.trace(String.format(Thread.currentThread().getName() + " - Found Placeholder : %s |", toRemove));
-
-            paramName = value.substring(value.indexOf('{') + 1, value.indexOf('}'));
-
-            if (TestDataCore.existsInConfigStore(paramName)) {
-                paramData = (String) TestDataCore.getConfigStore(paramName);
-            } else if (TestDataCore.existsInDataStore(paramName)) {
-                paramData = (String) TestDataCore.getDataStore(paramName);
-            } else if (TestDataCore.existsInGlobalStore(paramName)) {
-                paramData = (String) TestDataCore.getGlobalStore(paramName);
+            if (toRemove.contains(" ")) {
+                logger.trace(String.format(Thread.currentThread().getName() + " - Placeholder ignored as it contains spaces : %s |", toRemove));
+                break;
             } else {
-                throw new Error("Unable to find the definition of : " + toRemove);
+                logger.trace(String.format(Thread.currentThread().getName() + " - Found Placeholder : %s |", toRemove));
+
+                paramName = value.substring(value.indexOf('{') + 1, value.indexOf('}'));
+
+                if (TestDataCore.existsInConfigStore(paramName)) {
+                    paramData = (String) TestDataCore.getConfigStore(paramName);
+                } else if (TestDataCore.existsInDataStore(paramName)) {
+                    paramData = (String) TestDataCore.getDataStore(paramName);
+                } else if (TestDataCore.existsInGlobalStore(paramName)) {
+                    paramData = (String) TestDataCore.getGlobalStore(paramName);
+                } else {
+                    throw new Error("Unable to find the definition of : " + toRemove);
+                }
+
+                logger.trace(String.format(Thread.currentThread().getName() + " - Replacing Placeholder : %s with %s |", toRemove, paramData));
+                value = value.replace(toRemove, paramData);
             }
-
-            logger.trace(String.format(Thread.currentThread().getName() + " - Replacing Placeholder : %s with %s |", toRemove, paramData));
-            value = value.replace(toRemove, paramData);
-
         }
 
         return value;
