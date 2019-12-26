@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(glue = {"quality", "classpath:io.dtective"},
-        plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm", "json:target/cucumber-report/report.json"})
+        plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"})
 
 public class WebdriverDisplaysTextTest {
 }
