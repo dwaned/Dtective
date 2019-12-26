@@ -110,6 +110,10 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+javadoc {
+    options.encoding = 'UTF-8'
+}
+
 task customFatJar(type: Jar) {
     baseName = 'all-in-one-jar'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
