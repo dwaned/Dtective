@@ -19,7 +19,6 @@ jobs:
       run: |
         cp environment/environment.properties.example environment/environment.properties
         cp environment/testEnvironment.json.example environment/testEnvironment.json
-        docker-compose up -d --build
         docker-compose -f docker-compose.unittest.yml up -d --build
         docker ps
         docker exec runner-chrome mvn checkstyle:check
