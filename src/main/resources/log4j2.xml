@@ -9,8 +9,8 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} jvm-%pid [%t] %-5level %msg%n"/>
         </Console>
 
-        <File name="RollingFile" fileName="target/site/logs/jsonlogger.json"
-              bufferedIO="true" advertiseURI="target/site/logs/jsonlogger.json">
+        <File name="RollingFile" fileName="build/site/logs/jsonlogger.json"
+              bufferedIO="true" advertiseURI="build/site/logs/jsonlogger.json">
             <PatternLayout>
                 <pattern>%m%n</pattern>
             </PatternLayout>
