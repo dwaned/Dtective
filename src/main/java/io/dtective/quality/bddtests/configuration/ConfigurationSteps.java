@@ -1,17 +1,23 @@
 package io.dtective.quality.bddtests.configuration;
 
-import io.dtective.configuration.ParameterMap;
-import io.dtective.placeholders.BDDPlaceholders;
-import io.dtective.test.TestStepsCore;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.dtective.configuration.ParameterMap;
+import io.dtective.data.DataProvider;
+import io.dtective.placeholders.BDDPlaceholders;
+import io.dtective.test.TestStepsCore;
 import org.junit.Assert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.BrowserType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Contains all the steps related to Configuration of parameters for the test run. These configurations can be
@@ -26,6 +32,9 @@ import java.util.List;
  * @since 1.0
  */
 public class ConfigurationSteps extends TestStepsCore {
+
+    @Autowired
+    private DataProvider dataProvider;
 
     private List<Field> fieldList;
 
@@ -48,15 +57,34 @@ public class ConfigurationSteps extends TestStepsCore {
     public void iSetConfigurationToValue(String field, String value) {
 
         fieldList.stream()
-                .filter(x -> x.getName().equals("param" + field))
+                .filter(x -> x.getName().equals("param" + BDDPlaceholders.replace(field)))
                 .forEach(paramField -> {
                     try {
                         paramField.setAccessible(true);
-                        paramField.set(null, value);
+                        paramField.set(null, BDDPlaceholders.replace(value));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    @Given("I get configuration \"([^\"]*)\" and store it in data-store \"([^\"]*)\"")
+    public void iGetConfigurationAndStoreItInDataStore(String field, String dataStore) {
+
+        AtomicReference<String> value = new AtomicReference<>();
+
+        fieldList.stream()
+                .filter(x -> x.getName().equals("param" + field))
+                .forEach(paramField -> {
+                    try {
+                        paramField.setAccessible(true);
+                        value.set((String) paramField.get(BDDPlaceholders.replace(field)));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        dataProvider.getLocalDataService().put(dataStore, value.get());
     }
 
     /**
