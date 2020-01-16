@@ -3,6 +3,7 @@ package io.dtective.test;
 import io.dtective.data.DataProvider;
 import io.dtective.environment.TestEnvironmentManager;
 import io.dtective.placeholders.BDDPlaceholders;
+import io.dtective.user.QAUserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -54,6 +55,7 @@ public class TestDataCore {
     public static void addToDataStore(String key, Object o) {
         dataProvider.getLocalDataService().put(key, o);
         logger.trace(String.format("Local storage added <%s/%s>", key, o));
+        QAUserProfile.getCurrent().appendTextLogsToScenario("Local storage added:", "Name: " + key + " - Value: " + o);
     }
 
     /**
@@ -65,6 +67,7 @@ public class TestDataCore {
     public static void addToGlobalStore(String key, Object o) {
         dataProvider.getGlobalDataService().put(key, o);
         logger.trace(String.format("Global storage added <%s/%s>", key, o));
+        QAUserProfile.getCurrent().appendTextLogsToScenario("Global storage added:", "Name: " + key + " - Value: " + o);
     }
 
     /**
