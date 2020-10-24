@@ -7,7 +7,7 @@
     <groupId>io.dtective</groupId>
     <artifactId>dtective-core</artifactId>
 
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <!--Project Organization-->
     <organization>
@@ -113,7 +113,7 @@
         <cucumber.version>4.2.6</cucumber.version>
         <junit.version>4.13-beta-2</junit.version>
         <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
-        <jackson-databind.version>2.9.10.1</jackson-databind.version>
+        <jackson-databind.version>2.9.10.4</jackson-databind.version>
         <json.version>20180813</json.version>
         <guava.version>27.1-jre</guava.version>
         <ashot.version>1.5.4</ashot.version>
@@ -267,7 +267,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.23</version>
+                        <version>8.29</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -350,7 +350,7 @@
                     <!--<resultsDirectory>${project.build.directory}/surefire-reports</resultsDirectory>-->
                     <reportVersion>${allure.version}</reportVersion>
                     <allureDownloadUrl>
-                        http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
+                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
                     </allureDownloadUrl>
                 </configuration>
             </plugin>
@@ -403,7 +403,7 @@
                     <!--<resultsDirectory>${project.build.directory}/surefire-reports</resultsDirectory>-->
                     <reportVersion>${allure.version}</reportVersion>
                     <allureDownloadUrl>
-                        http://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
+                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
                     </allureDownloadUrl>
                 </configuration>
             </plugin>
