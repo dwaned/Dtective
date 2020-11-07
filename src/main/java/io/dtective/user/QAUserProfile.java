@@ -12,7 +12,7 @@ import io.dtective.utils.ClipboardHelper;
 import io.dtective.utils.MemoryHelper;
 import io.dtective.utils.WebElementHelper;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.Scenario;
+import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;

@@ -1,7 +1,7 @@
 package io.dtective.quality.bddtests.webdriver.refresh;
 
 import io.dtective.test.TestStepsCore;
-import cucumber.api.java.en.Given;
+import io.cucumber.java.en.Given;
 
 /**
  * Class which contains all the steps which

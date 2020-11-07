@@ -1,7 +1,7 @@
 package io.dtective.quality.bddtests.webdriver.displays;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import io.dtective.test.TestDataCore;
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;

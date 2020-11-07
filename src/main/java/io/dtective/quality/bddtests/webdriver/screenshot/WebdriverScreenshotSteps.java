@@ -2,8 +2,8 @@ package io.dtective.quality.bddtests.webdriver.screenshot;
 
 import io.dtective.test.TestDataCore;
 import io.dtective.test.TestStepsCore;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 

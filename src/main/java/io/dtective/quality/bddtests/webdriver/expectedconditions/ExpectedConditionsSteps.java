@@ -2,7 +2,7 @@ package io.dtective.quality.bddtests.webdriver.expectedconditions;
 
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.Then;
 import org.openqa.selenium.By;
 
 import java.util.regex.Pattern;

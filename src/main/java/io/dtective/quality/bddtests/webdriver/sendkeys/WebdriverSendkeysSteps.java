@@ -3,8 +3,8 @@ package io.dtective.quality.bddtests.webdriver.sendkeys;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 
 /**

@@ -3,8 +3,8 @@ package io.dtective.quality.bddtests.http.put;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.test.TestDataCore;
 import io.dtective.web.HttpManager;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import java.io.IOException;
 import java.util.HashMap;
 

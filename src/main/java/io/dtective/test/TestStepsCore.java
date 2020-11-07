@@ -1,11 +1,11 @@
 package io.dtective.test;
 
+import io.cucumber.java.Scenario;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.exceptions.RegisterFailure;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.selenium.Extensions.QAWebDriver;
 import io.dtective.user.QAUserProfile;
-import cucumber.api.Scenario;
 import io.dtective.webdrivers.CloudWebDriverCapabilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

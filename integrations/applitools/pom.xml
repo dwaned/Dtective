@@ -63,19 +63,19 @@
         </developer>
     </developers>
 
-    <repositories>
-        <repository>
-            <id>catena-maven-registry</id>
-            <name>Catena Maven Registry</name>
-            <url>http://qa-server.catena.media/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </releases>
-        </repository>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>catena-maven-registry</id>-->
+<!--            <name>Catena Maven Registry</name>-->
+<!--            <url>http://qa-server.catena.media/repository/maven-public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--                <updatePolicy>never</updatePolicy>-->
+<!--                <checksumPolicy>warn</checksumPolicy>-->
+<!--            </releases>-->
+<!--        </repository>-->
 
-    </repositories>
+<!--    </repositories>-->
 
     <properties>
         <!--Maven Properties-->
@@ -94,7 +94,7 @@
 
         <!--Allure Integration-->
         <allure.version>2.10.0</allure.version>
-        <allure.cucumber4.jvm.version>2.12.1</allure.cucumber4.jvm.version>
+        <allure.cucumber5.jvm.version>2.12.1</allure.cucumber5.jvm.version>
         <allure.results.directory.output>${project.build.directory}/allure-results</allure.results.directory.output>
         <TestAutomationEngineCore.version>1.3.9</TestAutomationEngineCore.version>
         <eyes-selenium-java3.version>3.141.1</eyes-selenium-java3.version>
@@ -420,11 +420,11 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>catena.qa</groupId>
-            <artifactId>TestAutomationEngine</artifactId>
-            <version>${TestAutomationEngineCore.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>catena.qa</groupId>-->
+<!--            <artifactId>TestAutomationEngine</artifactId>-->
+<!--            <version>${TestAutomationEngineCore.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.applitools</groupId>

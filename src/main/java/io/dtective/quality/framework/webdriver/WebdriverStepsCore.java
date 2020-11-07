@@ -1,5 +1,11 @@
 package io.dtective.quality.framework.webdriver;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.selenium.Extensions.SharedWebDriver;
@@ -7,12 +13,6 @@ import io.dtective.test.SeleniumCore;
 import io.dtective.test.TestDataCore;
 import io.dtective.test.TestStepsCore;
 import io.dtective.user.QAUserProfile;
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;

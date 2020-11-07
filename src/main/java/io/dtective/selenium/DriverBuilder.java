@@ -1,5 +1,6 @@
 package io.dtective.selenium;
 
+import com.savoirtech.logging.slf4j.json.LoggerFactory;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.selenium.Extensions.QAAndroidDriver;
 import io.dtective.selenium.Extensions.QAIOSDriver;
@@ -7,15 +8,21 @@ import io.dtective.selenium.Extensions.QAWebDriver;
 import io.dtective.selenium.Extensions.SharedWebDriver;
 import io.dtective.webdrivers.CloudWebDriverCapabilities;
 import io.dtective.webdrivers.WebDriverCapabilities;
-import com.savoirtech.logging.slf4j.json.LoggerFactory;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariDriverService;
+import org.openqa.selenium.safari.SafariOptions;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -61,10 +68,15 @@ public class DriverBuilder {
     private static final String FIREFOX_DRIVER_GECKO = "geckodriver";
 
     /**
+     * Name of the executable for local safari webdriver
+     */
+    private static final String SAFARI_DRIVER = "safaridriver";
+
+    /**
      * Class logger
      */
-    private static com.savoirtech.logging.slf4j.json.logger.Logger
-            logger = LoggerFactory.getLogger("JSONLogger");
+    private static final com.savoirtech.logging.slf4j.json.logger.Logger
+            LOGGER = LoggerFactory.getLogger("JSONLogger");
 
     /**
      * Evaluates parameters
@@ -91,7 +103,7 @@ public class DriverBuilder {
             }
         } else {
 
-            logger.debug().message("Adding new Remote Web-Driver")
+            LOGGER.debug().message("Adding new Remote Web-Driver")
                     .field("browser-type", browserType)
                     .field("remote-driver", true)
                     .field("single-instance", true)
@@ -110,7 +122,7 @@ public class DriverBuilder {
 
 
         if (driver == null) {
-            logger.error().message("Failed to initialize the driver");
+            LOGGER.error().message("Failed to initialize the driver");
             throw new Error("Unable to initialize the driver \n " + ParameterMap.mapToString());
         }
 
@@ -144,14 +156,19 @@ public class DriverBuilder {
      */
     private static WebDriver getLocalWebDriver(String browserType) {
         WebDriver driver;
-        if (browserType.equals(BrowserType.CHROME))
-            driver = getLocalChromeDriver();
-        else if (browserType.equals(BrowserType.FIREFOX))
-            driver = getLocalFirefoxDriver();
-        else if (browserType.equals(BrowserType.SAFARI))
-            driver = getLocalSafariDriver();
-        else
-            throw new Error("Driver Not Implemented - " + browserType);
+        switch (browserType) {
+            case BrowserType.CHROME:
+                driver = getLocalChromeDriver();
+                break;
+            case BrowserType.FIREFOX:
+                driver = getLocalFirefoxDriver();
+                break;
+            case BrowserType.SAFARI:
+                driver = getLocalSafariDriver();
+                break;
+            default:
+                throw new Error("Driver Not Implemented - " + browserType);
+        }
         return driver;
     }
 
@@ -167,7 +184,7 @@ public class DriverBuilder {
         WebDriver driver = null;
 
         if (!ParameterMap.getParamCloudProvider().isEmpty()) {
-            logger.debug().message("Creating new remote cloud web-driver - " + ParameterMap.getParamSeleniumHubUrl());
+            LOGGER.debug().message("Creating new remote cloud web-driver - " + ParameterMap.getParamSeleniumHubUrl());
             try {
                 driver = new RemoteWebDriver(new URL(CloudWebDriverCapabilities.getCloudURL()),
                         CloudWebDriverCapabilities.getCloudCapabilities());
@@ -180,13 +197,13 @@ public class DriverBuilder {
             if (ParameterMap.getParamSeleniumHubUrl() == null
                     || ParameterMap.getParamSeleniumHubUrl().isEmpty()
                     || ParameterMap.getParamSeleniumHubUrl().contains("N/A")) {
-                logger.error().message("Selenium Hub URL not set");
+                LOGGER.error().message("Selenium Hub URL not set");
                 System.exit(-1);
             }
 
             try {
 
-                logger.debug().message("Creating new remote web-driver - " + ParameterMap.getParamSeleniumHubUrl());
+                LOGGER.debug().message("Creating new remote web-driver - " + ParameterMap.getParamSeleniumHubUrl());
 
                 if (browserType.equals(BrowserType.ANDROID)) {
                     driver = new QAAndroidDriver(new URL(ParameterMap.getParamSeleniumHubUrl()),
@@ -201,7 +218,7 @@ public class DriverBuilder {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                logger.error().message(e.getMessage()).log();
+                LOGGER.error().message(e.getMessage()).log();
 
             }
         }
@@ -218,7 +235,7 @@ public class DriverBuilder {
 
         WebDriver driver = null;
 
-        logger.debug().message("System.getProperty - OS.Name - "
+        LOGGER.debug().message("System.getProperty - OS.Name - "
                 + System.getProperty(SYSTEM_PROPERTY_OS_NAME)).log();
 
 
@@ -226,15 +243,29 @@ public class DriverBuilder {
 
             System.setProperty(SYSTEM_PROPERTY_CHROME_DRIVER, CHROME_DRIVER + WINDOWS_EXTENSION);
 
-            driver = new ChromeDriver(WebDriverCapabilities.getCapabilities(BrowserType.CHROME));
+            ChromeDriverService service = new ChromeDriverService.Builder()
+                    .usingDriverExecutable(new File(CHROME_DRIVER))
+                    .usingAnyFreePort()
+                    .build();
 
+            ChromeOptions options = new ChromeOptions();
+            options.merge(WebDriverCapabilities.getCapabilities(BrowserType.CHROME));
+            driver = new ChromeDriver(service, options);
 
         } else {
 
             System.setProperty(SYSTEM_PROPERTY_CHROME_DRIVER, CHROME_DRIVER);
 
             try {
-                driver = new ChromeDriver(WebDriverCapabilities.getCapabilities(BrowserType.CHROME));
+                ChromeDriverService service = new ChromeDriverService.Builder()
+                        .usingDriverExecutable(new File(CHROME_DRIVER))
+                        .usingAnyFreePort()
+                        .build();
+
+                ChromeOptions options = new ChromeOptions();
+                options.merge(WebDriverCapabilities.getCapabilities(BrowserType.CHROME));
+                driver = new ChromeDriver(service, options);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -257,7 +288,15 @@ public class DriverBuilder {
      */
     public static WebDriver getLocalSafariDriver() {
 
-        return new SafariDriver(WebDriverCapabilities.getCapabilities(BrowserType.SAFARI));
+        SafariDriverService service = new SafariDriverService.Builder()
+                .usingDriverExecutable(new File(SAFARI_DRIVER))
+                .usingAnyFreePort()
+                .build();
+
+        SafariOptions options = new SafariOptions();
+        options.merge(WebDriverCapabilities.getCapabilities(BrowserType.SAFARI));
+
+        return new SafariDriver(service, options);
 
     }
 
@@ -277,8 +316,15 @@ public class DriverBuilder {
             System.setProperty(SYSTEM_PROPERTY_FIREFOX_DRIVER, FIREFOX_DRIVER_GECKO);
         }
 
+        GeckoDriverService service = new GeckoDriverService.Builder()
+                .usingDriverExecutable(new File(FIREFOX_DRIVER_GECKO))
+                .usingAnyFreePort()
+                .build();
 
-        return new FirefoxDriver(WebDriverCapabilities.getCapabilities(BrowserType.FIREFOX));
+        FirefoxOptions options = new FirefoxOptions();
+        options.merge(WebDriverCapabilities.getCapabilities(BrowserType.FIREFOX));
+
+        return new FirefoxDriver(service, options);
 
     }
 

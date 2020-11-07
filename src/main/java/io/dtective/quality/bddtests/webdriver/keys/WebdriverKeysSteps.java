@@ -2,7 +2,7 @@ package io.dtective.quality.bddtests.webdriver.keys;
 
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.java.en.And;
+import io.cucumber.java.en.And;
 import org.openqa.selenium.Keys;
 
 /**

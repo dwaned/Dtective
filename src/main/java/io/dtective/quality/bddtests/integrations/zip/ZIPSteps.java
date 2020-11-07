@@ -2,10 +2,10 @@ package io.dtective.quality.bddtests.integrations.zip;
 
 import io.dtective.test.TestStepsCore;
 import io.dtective.zip.ZipHelper;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,23 +19,18 @@ public class ZIPSteps extends TestStepsCore {
     /**
      * Class logger.
      */
-    private static Logger classLogger =
+    private static final Logger CLASS_LOGGER =
             LogManager.getLogger(ZIPSteps.class);
-
-    /**
-     * Singe file for zipping.
-     */
-    private String singleFilePath = "src/site/resources/images/icon_error_sml.gif";
 
     /**
      * Folder containing only files and no other folders / sub-folder items.
      */
-    private String singleFileFolder = "src/site/css";
+    private final String singleFileFolder = "src/site/css";
 
     /**
      * Folder containing both files and sub-folders with files.
      */
-    private String multiFolder = "src/site/images";
+    private final String multiFolder = "src/site/images";
 
     /**
      * Java FILE object of the currently used file ( one to be compressed).
@@ -56,7 +51,8 @@ public class ZIPSteps extends TestStepsCore {
      */
     @Given("^I have a file to be zipped$")
     public void iHaveAFileToBeZipped() {
-        classLogger.debug("Adding SINGLE file to SingleFileTest.zip : " + singleFilePath);
+        String singleFilePath = "src/site/resources/images/icon_error_sml.gif";
+        CLASS_LOGGER.debug("Adding SINGLE file to SingleFileTest.zip : " + singleFilePath);
         currentFile = new File(singleFilePath);
         currentZipTargetFolder = "target/SingleFileZipTest";
         currentZipFileName = "target/SingleFileTest.zip";
@@ -101,7 +97,7 @@ public class ZIPSteps extends TestStepsCore {
         currentZipTargetFolder = "target/SingleFileFolderZipTest";
 
         if (!currentFile.exists()) {
-            classLogger.error("The specified folder does not exist : " + singleFileFolder);
+            CLASS_LOGGER.error("The specified folder does not exist : " + singleFileFolder);
             assert currentFile.exists();
         }
     }
@@ -127,7 +123,7 @@ public class ZIPSteps extends TestStepsCore {
         currentZipFileName = "target/MultiFolder.zip";
 
         if (!currentFile.exists()) {
-            classLogger.error("The specified folder does not exist : " + multiFolder);
+            CLASS_LOGGER.error("The specified folder does not exist : " + multiFolder);
         }
     }
 
@@ -151,7 +147,7 @@ public class ZIPSteps extends TestStepsCore {
         File zipFile = new File(currentZipFileName);
 
         if (!zipFile.exists()) {
-            classLogger.error("The zipped file does not exist : " + zipFile.toString());
+            CLASS_LOGGER.error("The zipped file does not exist : " + zipFile.toString());
         }
     }
 }

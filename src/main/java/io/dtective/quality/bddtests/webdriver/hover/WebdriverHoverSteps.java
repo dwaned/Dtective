@@ -3,7 +3,7 @@ package io.dtective.quality.bddtests.webdriver.hover;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 
 /**

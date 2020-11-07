@@ -1,5 +1,6 @@
 package io.dtective.quality.framework.http;
 
+import io.cucumber.java.en.And;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.test.TestDataCore;
@@ -10,9 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.logging.log4j.LogManager;

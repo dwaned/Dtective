@@ -1,7 +1,7 @@
 package quality.bddtests.webdriver.paste.xpath;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(glue = {"quality", "classpath:io.dtective"},
-        plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm", "json:target/cucumber-report/report.json"})
+        plugin = { "json:target/cucumber-report/report.json"})
 
 public class WebdriverCopyPasteXpathTest {
 }

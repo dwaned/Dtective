@@ -1,6 +1,6 @@
 package io.dtective.quality.bdd;
 
-import cucumber.api.java.en.Given;
+import io.cucumber.java.en.Given;
 
 /**
  * A simple class which contains a BDD test step.

@@ -7,9 +7,9 @@ import com.applitools.eyes.TestResults;
 import com.applitools.eyes.selenium.Eyes;
 import com.catena.qa.framework.configuration.ParameterMap;
 import com.catena.qa.framework.test.TestStepsCore;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class WebdriverAppliToolsSteps extends TestStepsCore {

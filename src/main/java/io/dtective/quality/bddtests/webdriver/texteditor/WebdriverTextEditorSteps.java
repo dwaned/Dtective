@@ -4,7 +4,7 @@ import io.dtective.selenium.Extensions.QAWebElement;
 import io.dtective.test.TestStepsCore;
 import io.dtective.utils.WebElementHelper;
 import io.dtective.xpath.XpathHelper;
-import cucumber.api.java.en.And;
+import io.cucumber.java.en.And;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

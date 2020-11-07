@@ -1,7 +1,7 @@
 package io.dtective.quality.bddtests.webdriver.scrollTo;
 
 import io.dtective.test.TestStepsCore;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 
 /**

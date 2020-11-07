@@ -1,13 +1,13 @@
 package io.dtective.quality.framework.data;
 
+import io.cucumber.java.en.Given;
 import io.dtective.data.DataProvider;
 import io.dtective.placeholders.BDDPlaceholders;
 import com.google.gson.*;
 import com.jayway.jsonpath.*;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;

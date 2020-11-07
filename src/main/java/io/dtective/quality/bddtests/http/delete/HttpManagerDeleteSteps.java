@@ -2,7 +2,7 @@ package io.dtective.quality.bddtests.http.delete;
 
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.web.HttpManager;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.When;
 
 import java.io.IOException;
 
