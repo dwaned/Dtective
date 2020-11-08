@@ -1,5 +1,6 @@
 package io.dtective.quality.framework.http;
 
+import com.jayway.jsonpath.Predicate;
 import io.cucumber.java.en.And;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.placeholders.BDDPlaceholders;
@@ -706,17 +707,16 @@ public class HttpStepsCore {
     }
 
     private String extractValueFromJson(String key, JsonObject jsonObject) {
+        Object actualValue = null;
         final int jsonIndentation = 4;
-        key = BDDPlaceholders.replace(key);
-        String actualValue = null;
 
         try {
-            actualValue = JsonPath.read(jsonObject.toString(), key).toString();
+            actualValue = JsonPath.read(jsonObject.toString(), key, new Predicate[0]);
         } catch (PathNotFoundException e) {
-            Assert.fail("Key '" + key + "' was not found within " + new JSONObject(jsonObject).toString(jsonIndentation));
+            Assert.fail("Key '" + key + "' was not found within " + (new JSONObject(jsonObject)).toString(jsonIndentation));
         }
 
-        return actualValue;
+        return "" + actualValue;
     }
 
     /**
@@ -930,6 +930,11 @@ public class HttpStepsCore {
         TestDataCore.removeFromDataStore("headers");
     }
 
+    private String getCurrentResponseBody() {
+        HttpResponseWrapper response = (HttpResponseWrapper) TestDataCore.getDataStore("response");
+        return response.getHttpResponseBody();
+    }
+
     /**
      * Asserts if a text exists within the response from an HTTP request
      *
@@ -938,14 +943,16 @@ public class HttpStepsCore {
     @And("response body contains \"([^\"]*)\"")
     public void responseBodyContains(String text) {
         text = BDDPlaceholders.replace(text);
+        if (!this.getCurrentResponseBody().contains(text)) {
+            Assert.fail(String.format("Expected string [%s] was not found in response [%s]", text, this.getCurrentResponseBody()));
+        }
+    }
 
-        HttpResponseWrapper response = (HttpResponseWrapper) TestDataCore.getDataStore("response");
-        String responseBody;
-
-        responseBody = response.getHttpResponseBody();
-
-        if (!responseBody.contains(text)) {
-            Assert.fail(String.format("Expected string [%s] was not found in response [%s]", text, responseBody));
+    @And("response body does not contain \"([^\"]*)\"")
+    public void responseBodyDoesNotContain(String text) {
+        text = BDDPlaceholders.replace(text);
+        if (this.getCurrentResponseBody().contains(text)) {
+            Assert.fail(String.format("Expected string [%s] was found in response [%s]", text, this.getCurrentResponseBody()));
         }
     }
 }
