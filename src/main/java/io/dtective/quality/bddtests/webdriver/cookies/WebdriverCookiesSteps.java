@@ -177,7 +177,7 @@ public class WebdriverCookiesSteps extends TestStepsCore {
      * @param value value of the local storage to be added.
      * @since 1.0
      */
-    @When("I add to web local storage \"([^\"]*)\" with value \"([^\"]*)\"")
+    @When("I add to web local storage {string} with value {string}")
     public void iAddToWebLocalStorageWithValue(String key, String value) {
         getStorageDriver().getLocalStorage().setItem(placeholders(key), placeholders(value));
     }
@@ -189,7 +189,7 @@ public class WebdriverCookiesSteps extends TestStepsCore {
      * @param value value of the session storage to be added.
      * @since 1.0
      */
-    @When("I add to web session storage \"([^\"]*)\" with value \"([^\"]*)\"")
+    @When("I add to web session storage {string} with value {string}")
     public void iAddToWebSessionStorageWithValue(String key, String value) {
         getStorageDriver().getSessionStorage().setItem(placeholders(key), placeholders(value));
     }
@@ -216,7 +216,7 @@ public class WebdriverCookiesSteps extends TestStepsCore {
      * @param key name of the cookie to be removed
      * @since 1.0
      */
-    @And("I delete cookie \"([^\"]*)\"")
+    @And("I delete cookie {string}")
     public void iDeleteCookie(String key) {
 
         Cookie cookie = driver().manage().getCookieNamed(placeholders(key));
