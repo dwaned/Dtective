@@ -232,7 +232,7 @@ public class WebdriverCookiesSteps extends TestStepsCore {
      * @param key name of the local storage key to be removed
      * @since 1.0
      */
-    @And("I delete web local storage key \"([^\"]*)\"")
+    @And("I delete web local storage key {string}")
     public void iDeleteWebLocalStorageKey(String key) {
         getStorageDriver().getLocalStorage().removeItem(placeholders(key));
     }
@@ -243,7 +243,7 @@ public class WebdriverCookiesSteps extends TestStepsCore {
      * @param key name of the session storage key to be removed
      * @since 1.0
      */
-    @And("I delete web session storage key \"([^\"]*)\"")
+    @And("I delete web session storage key {string}")
     public void iDeleteWebSessionStorageKey(String key) {
         getStorageDriver().getSessionStorage().removeItem(placeholders(key));
     }
