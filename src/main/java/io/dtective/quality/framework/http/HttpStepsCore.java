@@ -916,7 +916,7 @@ public class HttpStepsCore {
         }
     }
 
-    @And("^I store value of header \"([^\"]*)\" into the data store \"([^\"]*)\"$")
+    @And("^I store value of header {string} into the data store \"([^\"]*)\"$")
     public void iStoreValueOfHeaderIntoTheDataStore(String header, String param) {
         header = BDDPlaceholders.replace(header);
         param = BDDPlaceholders.replace(param);
@@ -940,7 +940,7 @@ public class HttpStepsCore {
      *
      * @param text value to be check within the response
      */
-    @And("response body contains \"([^\"]*)\"")
+    @And("response body contains {string}")
     public void responseBodyContains(String text) {
         text = BDDPlaceholders.replace(text);
         if (!this.getCurrentResponseBody().contains(text)) {
@@ -948,7 +948,7 @@ public class HttpStepsCore {
         }
     }
 
-    @And("response body does not contain \"([^\"]*)\"")
+    @And("response body does not contain {string}")
     public void responseBodyDoesNotContain(String text) {
         text = BDDPlaceholders.replace(text);
         if (this.getCurrentResponseBody().contains(text)) {
