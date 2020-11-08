@@ -823,7 +823,7 @@ public class HttpStepsCore {
      * @param expectedValue the expected value of the response.
      * @since 1.0
      */
-    @And("^response body is equal to \"(.*)\"$")
+    @And("response body is equal to {string}")
     public void responseBodyIsEqualTo(String expectedValue) {
         expectedValue = BDDPlaceholders.replace(expectedValue);
 
@@ -841,7 +841,7 @@ public class HttpStepsCore {
      * @param param stored parameter to save the value.
      * @since 1.0
      */
-    @And("^I store response body key \"([^\"]*)\" as \"([^\"]*)\"$")
+    @And("I store response body key {string} as {string}")
     public void iGetValueOfKeyFromTheResponseBodyAndSaveItInStoredParam(String key, String param) {
         key = BDDPlaceholders.replace(key);
         param = BDDPlaceholders.replace(param);
@@ -877,7 +877,7 @@ public class HttpStepsCore {
      * @param value value to be asserted.
      * @since 1.0
      */
-    @And("^response does not contain key \"([^\"]*)\" with value \"([^\"]*)\"$")
+    @And("response does not contain key {string} with value {string}")
     public void responseDoesNotContainKeyWithValue(String key, String value) {
         key = BDDPlaceholders.replace(key);
         value = BDDPlaceholders.replace(value);
@@ -902,7 +902,7 @@ public class HttpStepsCore {
      * @param key key to verify that does not exist in response.
      * @since 1.0
      */
-    @And("^response does not contain key \"([^\"]*)\"$")
+    @And("response does not contain key {string}")
     public void responseDoesNotContainKey(String key) {
         key = BDDPlaceholders.replace(key);
 
@@ -916,7 +916,7 @@ public class HttpStepsCore {
         }
     }
 
-    @And("^I store value of header {string} into the data store \"([^\"]*)\"$")
+    @And("I store value of header {string} into the data store {string}")
     public void iStoreValueOfHeaderIntoTheDataStore(String header, String param) {
         header = BDDPlaceholders.replace(header);
         param = BDDPlaceholders.replace(param);
