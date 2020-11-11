@@ -112,7 +112,7 @@
         <aspectj.version>1.9.3.RC1</aspectj.version>
         <cucumber.version>5.6.0</cucumber.version>
         <junit.version>4.13.1</junit.version>
-        <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <jackson.version>2.11.3</jackson.version>
         <json.version>20180813</json.version>
         <guava.version>27.1-jre</guava.version>
@@ -130,6 +130,7 @@
         <!--Allure Integration-->
         <allure.version>2.10.0</allure.version>
         <allure.cucumber5.jvm.version>2.13.6</allure.cucumber5.jvm.version>
+        <allure.junit4.version>2.13.6</allure.junit4.version>
         <allure.results.directory.output>${project.build.directory}/allure-results</allure.results.directory.output>
     </properties>
 
@@ -187,14 +188,21 @@
                 <configuration>
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
                     </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit4.AllureJunit4</value>
+                        </property>
+                    </properties>
                     <forkCount>${maven-surefire-plugin.forkCount}</forkCount>
                     <rerunFailingTestsCount>${maven-surefire-plugin.rerunFailingTestsCount}</rerunFailingTestsCount>
                     <reuseForks>true</reuseForks>
                     <skipAfterFailureCount>${maven-surefire-plugin.skipAfterFailureCount}</skipAfterFailureCount>
                     <systemPropertyVariables>
                         <allure.results.directory>${allure.results.directory.output}</allure.results.directory>
-                        <cucumber.options>--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm</cucumber.options>
+                        <!--                        <cucumber.options>&#45;&#45;plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm</cucumber.options>-->
                     </systemPropertyVariables>
                     <testFailureIgnore>false</testFailureIgnore>
                     <trimStackTrace>false</trimStackTrace>
@@ -687,7 +695,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit4</artifactId>
-            <version>${allure.cucumber5.jvm.version}</version>
+            <version>${allure.junit4.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -25,6 +25,7 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -158,6 +159,7 @@ public class DriverBuilder {
         WebDriver driver;
         switch (browserType) {
             case BrowserType.CHROME:
+
                 driver = getLocalChromeDriver();
                 break;
             case BrowserType.FIREFOX:
@@ -263,6 +265,12 @@ public class DriverBuilder {
                         .build();
 
                 ChromeOptions options = new ChromeOptions();
+
+                if (ParameterMap.getParamChromeHeadlessMode())
+                    options.addArguments("--headless");
+
+                options.addArguments("--incognito");
+
                 options.merge(WebDriverCapabilities.getCapabilities(BrowserType.CHROME));
                 driver = new ChromeDriver(service, options);
 

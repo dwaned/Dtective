@@ -11,7 +11,6 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.Collections;
 import java.util.logging.Level;
 
 /**
@@ -63,9 +62,6 @@ public class WebDriverCapabilities {
 
                 ChromeOptions options = new ChromeOptions();
 
-                if (ParameterMap.getParamChromeHeadlessMode())
-                    options.addArguments("--headless");
-
                 capa = DesiredCapabilities.chrome();
                 capa.setBrowserName("chrome");
 
@@ -78,8 +74,6 @@ public class WebDriverCapabilities {
                         .ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
                 capa.setCapability(CapabilityType
                         .ForSeleniumServer.AVOIDING_PROXY, true);
-                capa.setCapability("chrome.switches",
-                        Collections.singletonList("--incognito"));
                 break;
 
             }
