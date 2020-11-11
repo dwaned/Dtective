@@ -25,7 +25,6 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
