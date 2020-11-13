@@ -36,6 +36,13 @@
         <url>http://github.com/Catena-Media/Dtective/tree/master</url>
     </scm>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <!--Development Team-->
     <developers>
         <developer>
@@ -82,26 +89,26 @@
         <maven-surefire-plugin.skipAfterFailureCount>40</maven-surefire-plugin.skipAfterFailureCount>
 
         <!--Maven Properties-->
-        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-        <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
+        <maven.resources.plugin.version>3.2.0</maven.resources.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!--Maven Local Properties-->
         <maven.checkstyle.version>3.1.1</maven.checkstyle.version>
-        <maven.site.version>3.7.1</maven.site.version>
+        <maven.site.version>3.9.1</maven.site.version>
         <maven.site.port>9000</maven.site.port>
-        <maven.jar.version>3.1.1</maven.jar.version>
-        <maven.versions.version>2.7</maven.versions.version>
-        <maven-project-info-reports.version>3.0.0</maven-project-info-reports.version>
-        <maven-javadoc.version>3.1.0</maven-javadoc.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
-        <maven-enforcer.version>3.0.0-M2</maven-enforcer.version>
+        <maven.jar.version>3.2.0</maven.jar.version>
+        <maven.versions.version>2.8.1</maven.versions.version>
+        <maven-project-info-reports.version>3.1.1</maven-project-info-reports.version>
+        <maven-javadoc.version>3.2.0</maven-javadoc.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-enforcer.version>3.0.0-M3</maven-enforcer.version>
 
         <!--Testing Framework Integrations-->
         <selenium.version>3.141.59</selenium.version>
-        <httpclient.version>4.5.9</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <slf4j-json-logger.version>2.0.2</slf4j-json-logger.version>
         <log4j.version>2.13.2</log4j.version>
@@ -118,7 +125,7 @@
         <guava.version>27.1-jre</guava.version>
         <ashot.version>1.5.4</ashot.version>
         <bson.version>3.10.1</bson.version>
-        <gson.version>2.8.5</gson.version>
+        <gson.version>2.8.6</gson.version>
         <browsermob.version>2.1.5</browsermob.version>
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
         <javax.activation.version>1.1.1</javax.activation.version>
@@ -132,6 +139,10 @@
         <allure.cucumber5.jvm.version>2.13.6</allure.cucumber5.jvm.version>
         <allure.junit4.version>2.13.6</allure.junit4.version>
         <allure.results.directory.output>${project.build.directory}/allure-results</allure.results.directory.output>
+
+        <!--Extent Integration-->
+        <extent.results.spark.output>${project.build.directory}/extent-results/SparkReport/Spark.html</extent.results.spark.output>
+        <extent.reporter.html.out>${project.build.directory}/extent-results/HtmlReport/ExtentHtml.html</extent.reporter.html.out>
     </properties>
 
     <build>
@@ -187,22 +198,22 @@
 
                 <configuration>
                     <argLine>
-                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
-                        -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>io.qameta.allure.junit4.AllureJunit4</value>
-                        </property>
-                    </properties>
                     <forkCount>${maven-surefire-plugin.forkCount}</forkCount>
                     <rerunFailingTestsCount>${maven-surefire-plugin.rerunFailingTestsCount}</rerunFailingTestsCount>
                     <reuseForks>true</reuseForks>
                     <skipAfterFailureCount>${maven-surefire-plugin.skipAfterFailureCount}</skipAfterFailureCount>
                     <systemPropertyVariables>
                         <allure.results.directory>${allure.results.directory.output}</allure.results.directory>
-                        <!--                        <cucumber.options>&#45;&#45;plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm</cucumber.options>-->
+                        <cucumber.glue>quality,classpath:io.dtective</cucumber.glue>
+                        <cucumber.plugin>json:target/cucumber-report/report.json</cucumber.plugin>
+                        <cucumber.plugin>com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:</cucumber.plugin>
+                        <cucumber.plugin>io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm</cucumber.plugin>
+                        <extent.reporter.spark.start>true</extent.reporter.spark.start>
+                        <extent.reporter.html.start>true</extent.reporter.html.start>
+                        <extent.reporter.html.out>${extent.reporter.html.out}</extent.reporter.html.out>
+                        <extent.reporter.spark.out>${extent.results.spark.output}</extent.reporter.spark.out>
                     </systemPropertyVariables>
                     <testFailureIgnore>false</testFailureIgnore>
                     <trimStackTrace>false</trimStackTrace>
@@ -276,11 +287,12 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.36.2</version>
+                        <version>8.37</version>
                     </dependency>
                 </dependencies>
                 <configuration>
                     <configLocation>src/main/resources/checkstyle/sun_checks.xml</configLocation>
+                    <suppressionsLocation>src/main/resources/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
                 </configuration>
             </plugin>
 
@@ -401,84 +413,84 @@
         </testResources>
     </build>
 
-    <reporting>
-        <plugins>
+        <reporting>
+            <plugins>
 
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>${allure.version}</version>
-                <configuration>
-                    <!--<resultsDirectory>${project.build.directory}/surefire-reports</resultsDirectory>-->
-                    <reportVersion>${allure.version}</reportVersion>
-                    <allureDownloadUrl>
-                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
-                    </allureDownloadUrl>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven.checkstyle.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>checkstyle</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                <configuration>
-                    <includeTestResources>true</includeTestResources>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <!--<configLocation>src/main/resources/checkstyle/google_checks.xml</configLocation>-->
-                    <configLocation>src/main/resources/checkstyle/sun_checks.xml</configLocation>
-                </configuration>
-            </plugin>
+                <plugin>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-maven</artifactId>
+                    <version>${allure.version}</version>
+                    <configuration>
+                        <!--<resultsDirectory>${project.build.directory}/surefire-reports</resultsDirectory>-->
+                        <reportVersion>${allure.version}</reportVersion>
+                        <allureDownloadUrl>
+                            https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/%s/allure-commandline-%s.zip
+                        </allureDownloadUrl>
+                    </configuration>
+                </plugin>
 
 
-            <!--Project information-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyle.version}</version>
+                    <reportSets>
+                        <reportSet>
+                            <reports>
+                                <report>checkstyle</report>
+                            </reports>
+                        </reportSet>
+                    </reportSets>
+                    <configuration>
+                        <includeTestResources>true</includeTestResources>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <!--<configLocation>src/main/resources/checkstyle/google_checks.xml</configLocation>-->
+                        <configLocation>src/main/resources/checkstyle/sun_checks.xml</configLocation>
+                    </configuration>
+                </plugin>
 
-            <!--&lt;!&ndash;                           &ndash;&gt;-->
-            <!--&lt;!&ndash; JavaDoc / TestDoc         &ndash;&gt;-->
-            <!--&lt;!&ndash;                           &ndash;&gt;-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc.version}</version>
-                <configuration>
-                    <additionalOptions>-Xdoclint:none</additionalOptions>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <id>Framework</id>
-                        <configuration>
-                            <reportOutputDirectory>${project.reporting.outputDirectory}</reportOutputDirectory>
-                            <destDir>javadoc</destDir>
-                            <show>public</show>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
+
+                <!--Project information-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${maven-project-info-reports.version}</version>
+                    <reportSets>
+                        <reportSet>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </reportSet>
+                    </reportSets>
+                </plugin>
+
+                <!--&lt;!&ndash;                           &ndash;&gt;-->
+                <!--&lt;!&ndash; JavaDoc / TestDoc         &ndash;&gt;-->
+                <!--&lt;!&ndash;                           &ndash;&gt;-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc.version}</version>
+                    <configuration>
+                        <additionalOptions>-Xdoclint:none</additionalOptions>
+                    </configuration>
+                    <reportSets>
+                        <reportSet>
+                            <id>Framework</id>
+                            <configuration>
+                                <reportOutputDirectory>${project.reporting.outputDirectory}</reportOutputDirectory>
+                                <destDir>javadoc</destDir>
+                                <show>public</show>
+                                <additionalparam>-Xdoclint:none</additionalparam>
+                            </configuration>
+                            <reports>
+                                <report>javadoc</report>
+                            </reports>
+                        </reportSet>
+                    </reportSets>
+                </plugin>
+            </plugins>
+        </reporting>
 
     <dependencies>
 
@@ -696,6 +708,22 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit4</artifactId>
             <version>${allure.junit4.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber5-adapter</artifactId>
+            <version>2.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
