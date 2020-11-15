@@ -28,7 +28,7 @@ script:
 
 
 deploy:
-  local_dir: runner-results/extent-results/SparkReport
+  local_dir: runner-results/SparkReport
   provider: pages
   github_token: $GITHUB_TOKEN
   keep_history: true

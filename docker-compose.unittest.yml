@@ -37,7 +37,7 @@ services:
     volumes:
       - /Users/$USER/.m2:/root/.m2
       - ./src:/tmp/qarunner/src
-      - ./runner-results:/tmp/qarunner/target
+      - ./runner-results:/tmp/qarunner/target/extent-results
     network_mode: bridge
     ports:
       - 9000:9000
