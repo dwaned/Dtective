@@ -1,10 +1,9 @@
 package io.dtective.quality.bddtests.webdriver.hover;
 
+import io.cucumber.java.en.When;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.test.TestStepsCore;
 import io.dtective.xpath.XpathHelper;
-import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 
 /**
  * Class which provides steps for hovering mouse focus to specific elements.
@@ -23,8 +22,8 @@ public class WebdriverHoverSteps extends TestStepsCore {
      */
     @When("^I hover over element with Property \"([^\"]*)\" and Value \"([^\"]*)\"$")
     public void iHoverOverElementWithPropertyAndValue(String property, String value) {
-        property = BDDPlaceholders.replace(property);
-        value = BDDPlaceholders.replace(value);
+        property = placeholders(property);
+        value = placeholders(value);
         getProfile().hoverOver(XpathHelper.findByPropAndValue(property, value));
     }
 
@@ -37,7 +36,7 @@ public class WebdriverHoverSteps extends TestStepsCore {
     @When("^I hover over by XPATH \"([^\"]*)\"$")
     public void iHoverOverByXPATH(String xpath) {
         xpath = BDDPlaceholders.replace(xpath);
-        getProfile().hoverOver(By.xpath(xpath));
+        getProfile().hoverOver(XpathHelper.findByXpathString(xpath));
     }
 
 }

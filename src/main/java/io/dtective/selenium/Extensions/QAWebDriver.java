@@ -3,8 +3,8 @@ package io.dtective.selenium.Extensions;
 
 import io.dtective.configuration.ParameterMap;
 import io.dtective.test.SeleniumCore;
-import io.dtective.user.QAUserProfile;
 import io.dtective.test.TestStepsCore;
+import io.dtective.user.QAUserProfile;
 import io.qameta.allure.Allure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -226,7 +226,7 @@ public class QAWebDriver implements WebDriver, JavascriptExecutor, TakesScreensh
     @Override
     public Object executeScript(String script, Object... args) {
         script = script.trim();
-        if (!script.toLowerCase().startsWith("return"))
+        if (!script.toLowerCase().startsWith("return") && !script.toLowerCase().contains("window.open"))
             script = "return " + script;
 
         return ((JavascriptExecutor) driver).executeScript(script, args);

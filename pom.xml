@@ -111,18 +111,18 @@
         <httpclient.version>4.5.13</httpclient.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <slf4j-json-logger.version>2.0.2</slf4j-json-logger.version>
-        <log4j.version>2.13.2</log4j.version>
+        <log4j.version>2.14.0</log4j.version>
         <xml.apis.version>1.0.b2</xml.apis.version>
-        <common.langs3.version>3.9</common.langs3.version>
-        <commons.io.version>2.6</commons.io.version>
+        <common.langs3.version>3.11</common.langs3.version>
+        <commons.io.version>2.8.0</commons.io.version>
         <apache.httpcomponents.version>4.5.9</apache.httpcomponents.version>
         <aspectj.version>1.9.3.RC1</aspectj.version>
         <cucumber.version>5.6.0</cucumber.version>
         <junit.version>4.13.1</junit.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <jackson.version>2.11.3</jackson.version>
-        <json.version>20180813</json.version>
-        <guava.version>27.1-jre</guava.version>
+        <json.version>20200518</json.version>
+        <guava.version>30.0-jre</guava.version>
         <ashot.version>1.5.4</ashot.version>
         <bson.version>3.10.1</bson.version>
         <gson.version>2.8.6</gson.version>
@@ -130,9 +130,9 @@
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <jaxb-runtime.version>2.4.0-b180830.0438</jaxb-runtime.version>
-        <java-client.version>7.0.0</java-client.version>
+        <java-client.version>7.3.0</java-client.version>
         <json-path.version>2.4.0</json-path.version>
-        <org.springframework.version>5.1.5.RELEASE</org.springframework.version>
+        <org.springframework.version>5.3.1</org.springframework.version>
 
         <!--Allure Integration-->
         <allure.version>2.10.0</allure.version>
@@ -206,10 +206,9 @@
                     <skipAfterFailureCount>${maven-surefire-plugin.skipAfterFailureCount}</skipAfterFailureCount>
                     <systemPropertyVariables>
                         <allure.results.directory>${allure.results.directory.output}</allure.results.directory>
-                        <cucumber.glue>quality,classpath:io.dtective</cucumber.glue>
-                        <cucumber.plugin>json:target/cucumber-report/report.json</cucumber.plugin>
-                        <cucumber.plugin>com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:</cucumber.plugin>
-                        <cucumber.plugin>io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm</cucumber.plugin>
+                        <cucumber.glue>quality,io.dtective.quality</cucumber.glue>
+                        <cucumber.execution.strict>true</cucumber.execution.strict>
+                        <cucumber.plugin>json:target/cucumber-report/report.json, io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm, com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:</cucumber.plugin>
                         <extent.reporter.spark.start>true</extent.reporter.spark.start>
                         <extent.reporter.html.start>true</extent.reporter.html.start>
                         <extent.reporter.html.out>${extent.reporter.html.out}</extent.reporter.html.out>

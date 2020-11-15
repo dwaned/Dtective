@@ -12,10 +12,10 @@ import java.util.List;
 
 public class QAWebElement implements WebElement, Locatable {
 
-    private static Logger logger = LogManager.getLogger(QAWebElement.class);
+    private static final Logger logger = LogManager.getLogger(QAWebElement.class);
 
-    private WebElement element;
-    private QAWebDriver driver;
+    private final WebElement element;
+    private final QAWebDriver driver;
 
     public QAWebElement(WebElement element, QAWebDriver driver) {
 
@@ -64,7 +64,7 @@ public class QAWebElement implements WebElement, Locatable {
     public void doubleClick() {
 
         driver.waitForPage();
-        driver.createActions().doubleClick(this).perform();
+        driver.createActions().doubleClick(element).perform();
         driver.takeScreenshot();
         driver.pageLoadTimeHook();
 
@@ -73,16 +73,16 @@ public class QAWebElement implements WebElement, Locatable {
     public void contextClick() {
 
         driver.waitForPage();
+        driver.createActions().contextClick(element).perform();
         highlightElement(element);
-        driver.createActions().contextClick(this).perform();
         driver.takeScreenshot();
     }
 
     public void hoverOver() {
 
         driver.waitForPage();
+        driver.createActions().moveToElement(element).perform();
         highlightElement(element);
-        driver.createActions().moveToElement(this).perform();
         driver.takeScreenshot();
     }
 
@@ -90,7 +90,8 @@ public class QAWebElement implements WebElement, Locatable {
 
         driver.waitForPage();
         highlightElement(element);
-        driver.createActions().dragAndDrop(this, target).perform();
+        driver.createActions().dragAndDrop(element, target).perform();
+        highlightElement(target);
         driver.takeScreenshot();
     }
 
@@ -98,12 +99,10 @@ public class QAWebElement implements WebElement, Locatable {
     @Override
     public void submit() {
 
-
         driver.waitForPage();
         element.submit();
         driver.pageLoadTimeHook();
         driver.takeScreenshot();
-
     }
 
     @Override

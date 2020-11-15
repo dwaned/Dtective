@@ -1,9 +1,9 @@
 package io.dtective.quality.bddtests.webdriver.screenshot;
 
-import io.dtective.test.TestDataCore;
-import io.dtective.test.TestStepsCore;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.dtective.test.TestDataCore;
+import io.dtective.test.TestStepsCore;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 
@@ -42,7 +42,7 @@ public class WebdriverScreenshotSteps extends TestStepsCore {
 
         try {
             TestStepsCore.getScenario().embed(FileUtils.readFileToByteArray(screenshot),
-                    URLConnection.guessContentTypeFromName(screenshot.getName()));
+                    URLConnection.guessContentTypeFromName(screenshot.getName()), "screenshot");
             TestDataCore.addToDataStore("screenshot-file", screenshot);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,13 +1,13 @@
 package io.dtective.quality.framework.data;
 
-import io.cucumber.java.en.Given;
-import io.dtective.data.DataProvider;
-import io.dtective.placeholders.BDDPlaceholders;
 import com.google.gson.*;
 import com.jayway.jsonpath.*;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.dtective.data.DataProvider;
+import io.dtective.placeholders.BDDPlaceholders;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,11 +191,11 @@ public class DataTestCore {
      * @since 1.0
      */
     @Then("^value of data-store \"(.*)\" is equal to \"(.*)\"$")
-    public void valueOfLocalParamIsEqualTo(String param, Object value) {
-        Assert.assertEquals("data-store " + param
-                        + " was not equal to " + value
-                        + ". Actual value was " + dataProvider.getLocalDataService().get(param),
-                value, dataProvider.getLocalDataService().get(param));
+    public void valueOfLocalParamIsEqualTo(String dataStore, Object expectedValue) {
+        Assert.assertEquals("data-store " + dataStore
+                        + " was not equal to " + dataStore
+                        + ". Actual value was " + dataProvider.getLocalDataService().get(dataStore),
+                expectedValue, dataProvider.getLocalDataService().get(dataStore));
     }
 
     /**

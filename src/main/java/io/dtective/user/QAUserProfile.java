@@ -1,5 +1,6 @@
 package io.dtective.user;
 
+import io.cucumber.java.Scenario;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.selenium.Extensions.QAWebDriver;
@@ -12,7 +13,6 @@ import io.dtective.utils.ClipboardHelper;
 import io.dtective.utils.MemoryHelper;
 import io.dtective.utils.WebElementHelper;
 import io.dtective.xpath.XpathHelper;
-import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -137,7 +137,6 @@ public class QAUserProfile {
         logger.debug(String.format("%s is double-clicking : %s", name, by));
         QAWebElement element = (QAWebElement) WebElementHelper.findElement(by);
         element.doubleClick();
-
     }
 
     /**
@@ -307,10 +306,9 @@ public class QAUserProfile {
      * @param text String containing the text to be found
      */
     public void textDisplays(String text) {
-        getWebDriver().takeScreenshot();
         By by = XpathHelper.findByText(text);
 
-        Assert.assertNotNull("Expected text did not display : " + text, WebElementHelper.findElement(by));
+        Assert.assertTrue("Expected text did not display : " + text, WebElementHelper.findElement(by).isDisplayed());
 
     }
 
@@ -416,7 +414,7 @@ public class QAUserProfile {
 
         String storedUrl = link.getAttribute("href");
 
-        getWebDriver().executeScript("window.open(\'" + storedUrl + "\');");
+        getWebDriver().executeScript("window.open('" + storedUrl + "');");
 
     }
 
@@ -555,7 +553,6 @@ public class QAUserProfile {
     public void scrollTo(By by) {
 
         QAWebElement element = (QAWebElement) WebElementHelper.findElement(by);
-        element.hoverOver();
     }
 
     public void isClickable(By by, int seconds) {

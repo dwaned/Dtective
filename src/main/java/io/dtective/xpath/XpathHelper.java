@@ -46,6 +46,11 @@ public class XpathHelper {
 
     }
 
+    public static By findByXpathString(String xpath) {
+
+        return By.xpath(xpath);
+    }
+
     public static By findByPropAndValue(String property, String value) {
 
         return By.xpath("//*[@" + property + "='" + value + "']");

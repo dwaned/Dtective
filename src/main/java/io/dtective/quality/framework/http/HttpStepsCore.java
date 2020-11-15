@@ -1,20 +1,23 @@
 package io.dtective.quality.framework.http;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.Predicate;
+import io.cucumber.java.DocStringType;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.dtective.configuration.ParameterMap;
 import io.dtective.placeholders.BDDPlaceholders;
 import io.dtective.test.TestDataCore;
 import io.dtective.user.QAUserProfile;
 import io.dtective.web.HttpManager;
 import io.dtective.web.HttpResponseWrapper;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.PathNotFoundException;
-
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.logging.log4j.LogManager;
@@ -35,6 +38,11 @@ import java.util.regex.Pattern;
  * @since 1.0
  */
 public class HttpStepsCore {
+
+    @DocStringType
+    public JsonNode json(String docString) throws JsonProcessingException {
+        return new ObjectMapper().readTree(docString);
+    }
 
     /**
      * Class Logger.
@@ -823,14 +831,14 @@ public class HttpStepsCore {
      * @param expectedValue the expected value of the response.
      * @since 1.0
      */
-    @And("response body is equal to {string}")
-    public void responseBodyIsEqualTo(String expectedValue) {
-        expectedValue = BDDPlaceholders.replace(expectedValue);
+    @And("response body is equal to")
+    public void responseBodyIsEqualTo(JsonNode expectedValue) {
+        String expectedValueString = BDDPlaceholders.replace(expectedValue.toString());
 
         HttpResponseWrapper response = (HttpResponseWrapper) TestDataCore.getDataStore("response");
         String responseBody = response.getHttpResponseBody();
 
-        Assert.assertEquals("Response body did not match the expected value.", expectedValue,
+        Assert.assertEquals("Response body did not match the expected value.", new JsonParser().parse(expectedValueString).toString(),
                 responseBody.replaceAll("^\"|\"$", ""));
     }
 
@@ -916,15 +924,25 @@ public class HttpStepsCore {
         }
     }
 
+    /**
+     * Stores value of header into a data store
+     *
+     * @param header header to obtain value from
+     * @param datastore data store to store value of header
+     */
     @And("I store value of header {string} into the data store {string}")
-    public void iStoreValueOfHeaderIntoTheDataStore(String header, String param) {
+    public void iStoreValueOfHeaderIntoTheDataStore(String header, String datastore) {
         header = BDDPlaceholders.replace(header);
-        param = BDDPlaceholders.replace(param);
+        datastore = BDDPlaceholders.replace(datastore);
 
         String headerValue = getHeaderValueFromResponse(header);
-        TestDataCore.addToDataStore(param, headerValue);
+        TestDataCore.addToDataStore(datastore, headerValue);
     }
 
+    /**
+     * Clear all HTTP Headers
+     *
+     */
     @When("I clear all HTTP Headers")
     public void iClearAllHTTPHeaders() {
         TestDataCore.removeFromDataStore("headers");
@@ -938,7 +956,7 @@ public class HttpStepsCore {
     /**
      * Asserts if a text exists within the response from an HTTP request
      *
-     * @param text value to be check within the response
+     * @param text value to be checked within the response
      */
     @And("response body contains {string}")
     public void responseBodyContains(String text) {
@@ -948,12 +966,26 @@ public class HttpStepsCore {
         }
     }
 
+    /**
+     * Asserts if the response from an HTTP request does not contain a specific string
+     *
+     * @param text string to be checked within the response
+     */
     @And("response body does not contain {string}")
     public void responseBodyDoesNotContain(String text) {
         text = BDDPlaceholders.replace(text);
         if (this.getCurrentResponseBody().contains(text)) {
             Assert.fail(String.format("Expected string [%s] was found in response [%s]", text, this.getCurrentResponseBody()));
         }
+    }
+
+    /**
+     * Asserts if response body from an HTTP request is empty
+     *
+     */
+    @Then("response body is empty")
+    public void responseBodyIsEmpty() {
+        Assert.assertTrue("Response body was not empty", this.getCurrentResponseBody().isEmpty());
     }
 }
 
