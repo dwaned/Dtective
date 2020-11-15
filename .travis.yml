@@ -25,8 +25,7 @@ script:
   - docker exec runner-chrome mvn compile test -Dcucumber.filter.tags="@applydbmigrations"
   - docker exec runner-chrome mvn compile test -Dcucumber.filter.tags="@UnitTest" || echo "done"
   - docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
-  - ls -la
-  - cd tmp/qarunner
+  - cd target
   - ls -la
 
 before_deploy:
