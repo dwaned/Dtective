@@ -1,5 +1,14 @@
 language: java
+jdk: oraclejdk11
 sudo: required
+
+env:
+  - GITHUB_TOKEN=c3b8b6305bec71a7e27fa0c3793f2e295f290631
+
+addons:
+  apt:
+    packages:
+      - lynx
 
 services:
   - docker
@@ -19,3 +28,13 @@ script:
   - docker exec runner-chrome mvn compile test "-Dcucumber.options=--tags @UnitTest"
   - docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
   - docker-compose -f docker-compose.unittest.yml down
+
+before_deploy:
+  - cp target/extent-results/SparkReport/Spark.html target/extent-results/SparkReport/index.html
+
+deploy:
+  local_dir: target/extent-results/SparkReport
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
