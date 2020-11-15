@@ -25,14 +25,14 @@ script:
   - docker exec runner-chrome mvn compile test -Dcucumber.filter.tags="@applydbmigrations"
   - docker exec runner-chrome mvn compile test -Dcucumber.filter.tags="@UnitTest" || echo "done"
   - docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
-  - cd target
+  - cd runner-results
   - ls -la
 
 before_deploy:
-  - cp tmp/qarunner/target/extent-results/SparkReport/Spark.html tmp/qarunner/target/extent-results/SparkReport/index.html
+  - cp runner-results/target/extent-results/SparkReport/Spark.html runner-results/target/extent-results/SparkReport/index.html
 
 deploy:
-  local_dir: /tmp/qarunner/target/extent-results/SparkReport
+  local_dir: runner-results/target/extent-results/SparkReport
   provider: pages
   github_token: $GITHUB_TOKEN
   keep_history: true
