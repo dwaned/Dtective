@@ -141,7 +141,7 @@
         <allure.results.directory.output>${project.build.directory}/allure-results</allure.results.directory.output>
 
         <!--Extent Integration-->
-        <extent.results.spark.output>${project.build.directory}/extent-results/SparkReport/Spark.html</extent.results.spark.output>
+        <extent.results.spark.output>${project.build.directory}/extent-results/SparkReport/index.html</extent.results.spark.output>
         <extent.reporter.html.out>${project.build.directory}/extent-results/HtmlReport/ExtentHtml.html</extent.reporter.html.out>
     </properties>
 

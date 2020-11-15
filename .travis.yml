@@ -26,8 +26,6 @@ script:
   - docker exec runner-chrome mvn compile test -Dcucumber.filter.tags="@UnitTest" || echo "done"
   - docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
 
-before_deploy:
-  - cp runner-results/extent-results/SparkReport/Spark.html runner-results/extent-results/SparkReport/index.html
 
 deploy:
   local_dir: runner-results/extent-results/SparkReport
