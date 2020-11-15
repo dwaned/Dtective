@@ -27,8 +27,7 @@ script:
   - docker exec runner-chrome mvn io.qameta.allure:allure-maven:report
 
 before_deploy:
-  - ls
-  - cp /tmp/qarunner/target/extent-results/SparkReport/Spark.html /tmp/qarunner/target/extent-results/SparkReport/index.html
+  - cp tmp/qarunner/target/extent-results/SparkReport/Spark.html tmp/qarunner/target/extent-results/SparkReport/index.html
 
 deploy:
   local_dir: /tmp/qarunner/target/extent-results/SparkReport
