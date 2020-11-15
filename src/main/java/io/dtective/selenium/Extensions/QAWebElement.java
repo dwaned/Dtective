@@ -12,7 +12,7 @@ import java.util.List;
 
 public class QAWebElement implements WebElement, Locatable {
 
-    private static final Logger logger = LogManager.getLogger(QAWebElement.class);
+    private static final Logger LOGGER = LogManager.getLogger(QAWebElement.class);
 
     private final WebElement element;
     private final QAWebDriver driver;
@@ -111,10 +111,10 @@ public class QAWebElement implements WebElement, Locatable {
         driver.waitForPage();
 
         if (charSequences.length != 0 && charSequences[0] instanceof Keys)
-            logger.debug("Sending Keys(key) - " + ((Keys) charSequences[0]).name() + "-- To Element "
+            LOGGER.debug("Sending Keys(key) - " + ((Keys) charSequences[0]).name() + "-- To Element "
                     + element.toString());
         else {
-            logger.debug("Sending Keys(txt) - " + charSequences[0] + " -- To Element" + element.toString());
+            LOGGER.debug("Sending Keys(txt) - " + charSequences[0] + " -- To Element" + element.toString());
         }
 
         highlightElement(element);
@@ -244,7 +244,7 @@ public class QAWebElement implements WebElement, Locatable {
     public void highlightElement(WebElement element, int durationInSeconds) {
 
         if (ParameterMap.getParamHighlightElements()) {
-            logger.debug("Highlighting - " + element.toString());
+            LOGGER.debug("Highlighting - " + element.toString());
 
             String originalStyle = element.getAttribute("style");
 
