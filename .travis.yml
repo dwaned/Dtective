@@ -29,7 +29,7 @@ script:
   - ls -la
 
 before_deploy:
-  - cp runner-results/target/extent-results/SparkReport/Spark.html runner-results/extent-results/SparkReport/index.html
+  - cp runner-results/extent-results/SparkReport/Spark.html runner-results/extent-results/SparkReport/index.html
 
 deploy:
   local_dir: runner-results/extent-results/SparkReport
