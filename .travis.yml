@@ -2,9 +2,6 @@ language: java
 jdk: oraclejdk11
 sudo: required
 
-env:
-  - GITHUB_TOKEN=c3b8b6305bec71a7e27fa0c3793f2e295f290631
-
 addons:
   apt:
     packages:
