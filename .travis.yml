@@ -28,10 +28,10 @@ script:
   - docker-compose -f docker-compose.unittest.yml down
 
 before_deploy:
-  - cp target/extent-results/SparkReport/Spark.html target/extent-results/SparkReport/index.html
+  - cp /tmp/qarunner/target/extent-results/SparkReport/Spark.html /tmp/qarunner/target/extent-results/SparkReport/index.html
 
 deploy:
-  local_dir: target/extent-results/SparkReport
+  local_dir: /tmp/qarunner/target/extent-results/SparkReport
   provider: pages
   github_token: $GITHUB_TOKEN
   keep_history: true
